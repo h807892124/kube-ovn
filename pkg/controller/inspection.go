@@ -31,6 +31,11 @@ func (c *Controller) inspectPod() error {
 		if pod.Spec.HostNetwork {
 			continue
 		}
+
+		if !isPodAlive(pod) {
+			continue
+		}
+
 		podNets, err := c.getPodKubeovnNets(pod)
 		if err != nil {
 			klog.Errorf("failed to list pod subnets, %v", err)
